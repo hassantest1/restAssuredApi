@@ -51,4 +51,6 @@ public class ApiUrls {
 	public static final String test = "test";
 	public static final String test2 = "test";
 
+	public static final String test3 = "test";
+
 }
