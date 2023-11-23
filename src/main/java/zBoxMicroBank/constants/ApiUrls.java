@@ -50,4 +50,7 @@ public class ApiUrls {
 	public static final String TestFaizanCNIC = "/api/Inquiry/WalletToCNICInquiryyyyy";
 	public static final String test = "test";
 
+
+	public static final String test3 = "test";
+	public static final String test2 = "test";
 }
