@@ -48,4 +48,6 @@ public class ApiUrls {
 	 public static final String Z_2_Z_PAYMENT = "/api/Payment/WalletToWallet";
 	 public static final String Z_2_CNIC = "/api/Inquiry/WalletToCNICInquiry";
 
+	public static final String TestFaizanCNIC = "/api/Inquiry/WalletToCNICInquiryyyyy";
+
 }
