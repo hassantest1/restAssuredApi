@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="zBoxMicroBank" thread-count="2" parallel="methods">
+<suite name="zBoxMicroBank">
   <test name="typeOfAccount">
     <classes>
       <class name="zBoxMicroBank.typeOfAccount.AccountTypesTestClass"/>
