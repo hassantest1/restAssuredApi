@@ -1,4 +1,4 @@
-package zBoxMicroBank.listeners;
+package zBoxMicroBank.wrappers;
 
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -7,7 +7,7 @@ import io.qameta.allure.Allure;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
 
-public class AllureUtils {
+public class AllureWrapper {
 	//Alt + Shift + S + V to quickly implement/override method
 	 @Attachment(value = "Screenshot", type = "image/png")
 	    public static byte[] takeScreenshot(WebDriver driver) {

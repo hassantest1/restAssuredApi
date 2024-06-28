@@ -138,6 +138,20 @@ public class TestUtils {
     	return selected;
     }
 
+    public static Integer getPhoneNumb(){
+        int selected = 0;
+        Random rand = new Random();
+        selected = rand.nextInt(1000000);
+        return selected;
+    }
+
+    public static Integer getCnicNumb(){
+        int selected = 0;
+        Random rand = new Random();
+        selected = rand.nextInt(10000000);
+        return selected;
+    }
+
     public static String getCurrentDate(String pattern) {
         // Get the current date
         LocalDate currentDate = LocalDate.now();

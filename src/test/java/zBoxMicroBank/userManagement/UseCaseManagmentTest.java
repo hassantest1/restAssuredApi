@@ -10,7 +10,7 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import zBoxMicroBank.constants.ApiUrls;
-import zBoxMicroBank.listeners.AllureUtils;
+import zBoxMicroBank.wrappers.AllureWrapper;
 import zBoxMicroBank.utils.ConfigManager;
 import zBoxMicroBank.utils.DBQueryExecutor;
 import zBoxMicroBank.utils.TestUtils;
@@ -89,7 +89,7 @@ public class UseCaseManagmentTest extends UserManagnmentBaseClass {
 			Assert.assertEquals(target_json_object.get("formName"),example.getData().getPayLoad().getFormName());
 			Assert.assertEquals(target_json_object.get("tableName"),example.getData().getPayLoad().getTableName());
 			Assert.assertEquals(target_json_object.get("isActive"),example.getData().getPayLoad().getIsActive());
-			AllureUtils.attachData("Response Data "+ApiUrls.GET_ALL_USECASES,response_getall_usecases.asPrettyString());	
+			AllureWrapper.attachData("Response Data "+ApiUrls.GET_ALL_USECASES,response_getall_usecases.asPrettyString());
 	}
 	
 	@Feature("User Managment")

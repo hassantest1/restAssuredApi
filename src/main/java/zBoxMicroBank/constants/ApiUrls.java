@@ -49,8 +49,15 @@ public class ApiUrls {
 	 public static final String Z_2_CNIC = "/api/Inquiry/WalletToCNICInquiry";
 	public static final String TestFaizanCNIC = "/api/Inquiry/WalletToCNICInquiryyyyy";
 	public static final String test = "test";
-
-
 	public static final String test3 = "test";
 	public static final String test2 = "test";
+
+	/*
+	 * ---------------------------- Transaction API's-------------------------------
+	 */
+
+	public static final String generateTitleFetchHash = "/transaction/v1/transaction/generateHash";
+	public static final String generatePaymentHash = "/transaction/v1/transaction/generateHashPayment";
+	public static final String inquiry = "/transaction/v1/transaction/inquiry";
+	public static final String payment = "/transaction/v1/transaction/payment";
 }

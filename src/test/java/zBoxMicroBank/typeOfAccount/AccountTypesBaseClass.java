@@ -24,9 +24,9 @@ public class AccountTypesBaseClass {
 		try {
 			getKey = new ConfigManager();
 			getHeaderList = new HashMap<String, Object>();
-			//getHeaderList.put("Authorization",getKey.getKeyValue("AUTH_TOKEN"));
-			Response response = Login.login(getKey.getKeyValue("user_name"), getKey.getKeyValue("user_pass"));
-			getHeaderList.put("Authorization", response.jsonPath().get("payLoad.token"));
+			getHeaderList.put("Authorization",getKey.getKeyValue("AUTH_TOKEN"));
+			//Response response = Login.login(getKey.getKeyValue("user_name"), getKey.getKeyValue("user_pass"));
+			//getHeaderList.put("Authorization", response.jsonPath().get("payLoad.token"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			System.out.println("ERROR"+e);

@@ -6,7 +6,7 @@ import java.util.Map;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import zBoxMicroBank.constants.ApiUrls;
-import zBoxMicroBank.listeners.AllureUtils;
+import zBoxMicroBank.wrappers.AllureWrapper;
 import zBoxMicroBank.models.common.ApiModelZbox;
 import zBoxMicroBank.models.common.Data;
 import zBoxMicroBank.models.common.PayLoad;
@@ -26,15 +26,15 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 	@Severity(SeverityLevel.CRITICAL)
 	@Test(groups="Account_Type",description="Create account and verify that created account from get accounts types API")
 	public void create_new_account_type() {
-		AllureUtils.logStep("Step 1: Get KYC SETs from API "+ ApiUrls.GET_KYC_SET);
+		AllureWrapper.logStep("Step 1: Get KYC SETs from API "+ ApiUrls.GET_KYC_SET);
 		Response get_kyc = getApiResponse(getHeaderList, ApiUrls.GET_KYC_SET);
 		Assert.assertNotNull(get_kyc.jsonPath().getString("payLoad.lovId[1]"), "payLoad.lovId Should not be null");
 		
-		AllureUtils.logStep("Step 2: Get client Role ID from API "+ApiUrls.GET_CLIENT_ROLES);
+		AllureWrapper.logStep("Step 2: Get client Role ID from API "+ApiUrls.GET_CLIENT_ROLES);
 		Response get_client_roles = getApiResponse(getHeaderList, ApiUrls.GET_CLIENT_ROLES);
 		Assert.assertNotNull(get_client_roles.jsonPath().getString("payLoad.lovId[0]"),"payLoad.lovId Should not be null");
 				
-		AllureUtils.logStep("Step 3: Create New Account Type using API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
+		AllureWrapper.logStep("Step 3: Create New Account Type using API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
 		ApiModelZbox api_body_skle = new ApiModelZbox();
 		api_body_skle.setData(new Data());
 		api_body_skle.getData().setPayLoad(new PayLoad());
@@ -60,12 +60,12 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 		api_body_skle.getData().getPayLoad().setAccountLevelId(response_create_Account.jsonPath().getString("payLoad.accountLevelId"));
 		api_body_skle.getData().getPayLoad().setCreatedBy(response_create_Account.jsonPath().getString("payLoad.createuser"));	
 		
-		AllureUtils.attachData("request Body", request_json_body.toString());
-		AllureUtils.logStep("Step 4: Verifying the Response of Create new account type API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
-		AllureUtils.attachData("Response Body", response_create_Account.asPrettyString());
+		AllureWrapper.attachData("request Body", request_json_body.toString());
+		AllureWrapper.logStep("Step 4: Verifying the Response of Create new account type API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
+		AllureWrapper.attachData("Response Body", response_create_Account.asPrettyString());
 		assertions(response_create_Account, api_body_skle);
 		
-		AllureUtils.logStep("Step 5: Verify the newly created account type using get Account Type API "+ApiUrls.GET_ALL_ACCOUNT_TYPES);
+		AllureWrapper.logStep("Step 5: Verify the newly created account type using get Account Type API "+ApiUrls.GET_ALL_ACCOUNT_TYPES);
 		ApiModelZbox api_body_skle_getall_accounts = new ApiModelZbox();
 		api_body_skle_getall_accounts.setData(new Data());
 		api_body_skle_getall_accounts.getData().setPayLoad(new PayLoad());
@@ -96,7 +96,7 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 		        break;
 		    }
 		}
-		AllureUtils.attachData("Get API Response Body", target_json_object.toString());
+		AllureWrapper.attachData("Get API Response Body", target_json_object.toString());
 		Assert.assertEquals(target_accountLevelId, target_json_object.get("accountLevelId"));
 		//Assert.assertNotNull(target_json_object.get("accountLevelCode"),"accountLevelCode should not be null");
 		Assert.assertNotNull(target_json_object.get("createdate"), "createdate should not be null");
@@ -140,15 +140,15 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 	@Test(groups="Account_Type",description="Create account type and update account type status to In-active")
 	public void create_and_update_account_type() {
 		
-		AllureUtils.logStep("Step 1: Get KYC SETs from API "+ApiUrls.GET_KYC_SET);
+		AllureWrapper.logStep("Step 1: Get KYC SETs from API "+ApiUrls.GET_KYC_SET);
 		Response get_kyc = getApiResponse(getHeaderList, ApiUrls.GET_KYC_SET);
 		Assert.assertNotNull(get_kyc.jsonPath().getString("payLoad.lovId[1]"), "payLoad.lovId Should not be null");
 		
-		AllureUtils.logStep("Step 2: Get client Role ID from API "+ApiUrls.GET_CLIENT_ROLES);
+		AllureWrapper.logStep("Step 2: Get client Role ID from API "+ApiUrls.GET_CLIENT_ROLES);
 		Response get_client_roles = getApiResponse(getHeaderList, ApiUrls.GET_CLIENT_ROLES);
 		Assert.assertNotNull(get_client_roles.jsonPath().getString("payLoad.lovId[0]"),"payLoad.lovId Should not be null");
 		
-		AllureUtils.logStep("Step 3: Create New Account Type using API"+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
+		AllureWrapper.logStep("Step 3: Create New Account Type using API"+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
 		ApiModelZbox api_body_skle = new ApiModelZbox();
 		api_body_skle.setData(new Data());
 		api_body_skle.getData().setPayLoad(new PayLoad());		
@@ -172,25 +172,25 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 		String request_json_body = TestUtils.gsonString(api_body_skle);
 		System.out.println(request_json_body.toString());
 		Response response_create_Account = postApiResponse(getHeaderList, request_json_body, ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
-		AllureUtils.attachData("request Body", request_json_body.toString());
+		AllureWrapper.attachData("request Body", request_json_body.toString());
 		
-		AllureUtils.logStep("Step 4: Verifying the Response of new account type");
-		AllureUtils.attachData("Response Body", response_create_Account.asPrettyString());	
+		AllureWrapper.logStep("Step 4: Verifying the Response of new account type");
+		AllureWrapper.attachData("Response Body", response_create_Account.asPrettyString());
 		assertions(response_create_Account, api_body_skle);
 		api_body_skle.getData().getPayLoad().setAccountLevelId(response_create_Account.jsonPath().getString("payLoad.accountLevelId"));
 		
-		AllureUtils.logStep("Step 5: Updating the account type Status to In-active using API "+ApiUrls.INACTIVE_ACCOUNT_TYPE);
+		AllureWrapper.logStep("Step 5: Updating the account type Status to In-active using API "+ApiUrls.INACTIVE_ACCOUNT_TYPE);
 		ApiModelZbox api_body_skle_update = new ApiModelZbox();
 		api_body_skle_update.setData(new Data());
 		api_body_skle_update.getData().setPayLoad(new PayLoad());		
 		api_body_skle_update.getData().getPayLoad().setAccountLevelId(api_body_skle.getData().getPayLoad().getAccountLevelId());
 		api_body_skle_update.getData().getPayLoad().setIsActive("N");
 		String update_request_json_body = TestUtils.gsonString(api_body_skle_update);		
-		AllureUtils.attachData("Request Body", update_request_json_body.toString());
+		AllureWrapper.attachData("Request Body", update_request_json_body.toString());
 		Response inactive_api_response = negativePostApiResponse(getHeaderList, update_request_json_body, ApiUrls.INACTIVE_ACCOUNT_TYPE);
-		AllureUtils.attachData("Response Body", inactive_api_response.toString());
+		AllureWrapper.attachData("Response Body", inactive_api_response.toString());
 		
-		AllureUtils.logStep("Step 6: Verify the response");
+		AllureWrapper.logStep("Step 6: Verify the response");
 		Assert.assertEquals(inactive_api_response.getStatusCode(), 200);
 		Assert.assertEquals(inactive_api_response.jsonPath().getString("responseCode"), "010000");
 		//Assert.assertEquals(inactive_api_response.jsonPath().getString("payLoad.isActive"), "N");
@@ -466,17 +466,17 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 	@Test(groups="Account_Type",description="Verify that already created account type is updating")
 	public void update_existing_account_type() {
 		
-		AllureUtils.logStep("Step 1: Get KYC SETs from API "+ApiUrls.GET_KYC_SET);
+		AllureWrapper.logStep("Step 1: Get KYC SETs from API "+ApiUrls.GET_KYC_SET);
 		Response get_kyc = getApiResponse(getHeaderList, ApiUrls.GET_KYC_SET);
 		assert get_kyc != null;
 		Assert.assertNotNull(get_kyc.jsonPath().getString("payLoad.lovId"), "payLoad.lovId Should not be null");
 	
-		AllureUtils.logStep("Step 2: Get client Role ID from API "+ApiUrls.GET_CLIENT_ROLES);
+		AllureWrapper.logStep("Step 2: Get client Role ID from API "+ApiUrls.GET_CLIENT_ROLES);
 		Response get_client_roles = getApiResponse(getHeaderList, ApiUrls.GET_CLIENT_ROLES);
 		assert get_client_roles != null;
 		Assert.assertNotNull(get_client_roles.jsonPath().getString("payLoad.lovId"),"payLoad.lovId Should not be null");
 		
-		AllureUtils.logStep("Step 3: Create New Account Type using below Body of API"+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
+		AllureWrapper.logStep("Step 3: Create New Account Type using below Body of API"+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
 		ApiModelZbox api_body_skle = new ApiModelZbox();
 		api_body_skle.setData(new Data());
 		api_body_skle.getData().setPayLoad(new PayLoad());
@@ -503,28 +503,28 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 		api_body_skle.getData().getPayLoad().setAccountLevelId(response_create_Account.jsonPath().getString("payLoad.accountLevelId"));
 		api_body_skle.getData().getPayLoad().setCreatedBy(response_create_Account.jsonPath().getString("payLoad.createuser"));
 		
-		AllureUtils.attachData("request Body for API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE, request_json_body.toString());
-		AllureUtils.logStep("Step 4: Verifying the Response of Create new account type API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
-		AllureUtils.attachData("Response Body of API"+ApiUrls.CREATE_NEW_ACCOUNT_TYPE, response_create_Account.asPrettyString());
+		AllureWrapper.attachData("request Body for API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE, request_json_body.toString());
+		AllureWrapper.logStep("Step 4: Verifying the Response of Create new account type API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
+		AllureWrapper.attachData("Response Body of API"+ApiUrls.CREATE_NEW_ACCOUNT_TYPE, response_create_Account.asPrettyString());
 		assertions(response_create_Account, api_body_skle);
 		
-		AllureUtils.logStep("Step 5: Get account type By id by API "+ApiUrls.GET_ACCOUNT_TYPE_BY_ID);
+		AllureWrapper.logStep("Step 5: Get account type By id by API "+ApiUrls.GET_ACCOUNT_TYPE_BY_ID);
 		Response response_get_acctype_by_id = getApiResponse(getHeaderList, ApiUrls.GET_ACCOUNT_TYPE_BY_ID+api_body_skle.getData().getPayLoad().getAccountLevelId());
-		AllureUtils.attachData("Response Body of API"+ApiUrls.GET_ACCOUNT_TYPE_BY_ID, response_get_acctype_by_id.asPrettyString());
+		AllureWrapper.attachData("Response Body of API"+ApiUrls.GET_ACCOUNT_TYPE_BY_ID, response_get_acctype_by_id.asPrettyString());
 		Assert.assertEquals(response_get_acctype_by_id.jsonPath().getString("payLoad.accountLevelId"), api_body_skle.getData().getPayLoad().getAccountLevelId());
 		
-		AllureUtils.logStep("Step 6: Verify Response of API "+ApiUrls.GET_ACCOUNT_TYPE_BY_ID);
+		AllureWrapper.logStep("Step 6: Verify Response of API "+ApiUrls.GET_ACCOUNT_TYPE_BY_ID);
 		assertions(response_get_acctype_by_id, api_body_skle);
 		api_body_skle.getData().getPayLoad().setCreatedBy(null);
 		String request__body = TestUtils.gsonString(api_body_skle);
 		System.out.println(request__body.toString());
 		
-		AllureUtils.logStep("Step 7: Updating Account type using API "+ApiUrls.Update_EXISTING_ACCOUNT_TYPE);
+		AllureWrapper.logStep("Step 7: Updating Account type using API "+ApiUrls.Update_EXISTING_ACCOUNT_TYPE);
 		Response update_acctype_by_id = negativePostApiResponse(getHeaderList, request__body, ApiUrls.Update_EXISTING_ACCOUNT_TYPE);
-		AllureUtils.attachData("Request Body of API"+ApiUrls.Update_EXISTING_ACCOUNT_TYPE, request__body.toString());
-		AllureUtils.attachData("Response Body of API"+ApiUrls.Update_EXISTING_ACCOUNT_TYPE, update_acctype_by_id.asPrettyString());
+		AllureWrapper.attachData("Request Body of API"+ApiUrls.Update_EXISTING_ACCOUNT_TYPE, request__body.toString());
+		AllureWrapper.attachData("Response Body of API"+ApiUrls.Update_EXISTING_ACCOUNT_TYPE, update_acctype_by_id.asPrettyString());
 
-		AllureUtils.logStep("Step 8: Verifying Response of API "+ApiUrls.Update_EXISTING_ACCOUNT_TYPE);
+		AllureWrapper.logStep("Step 8: Verifying Response of API "+ApiUrls.Update_EXISTING_ACCOUNT_TYPE);
 		Assert.assertEquals(update_acctype_by_id.getStatusCode(), 400);
 		Assert.assertEquals(update_acctype_by_id.jsonPath().getString("responseCode"), "011301");
 		//Assert.assertEquals(update_acctype_by_id.jsonPath().getString("This record is already pending for approval"), "This record is already pending for approval");
@@ -541,7 +541,7 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 			Map<String, Object> getHeaderList = new HashMap<String, Object>();
 			getHeaderList.put("Authorization","");
 			
-			AllureUtils.logStep("Step 1: Hit Create Account Type API with empty token  "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
+			AllureWrapper.logStep("Step 1: Hit Create Account Type API with empty token  "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
 
 			ApiModelZbox api_body_skle = new ApiModelZbox();
 			api_body_skle.setData(new Data());
@@ -566,8 +566,8 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 			System.out.println(request_json_body);
 			Response response_create_Account = negativePostApiResponse(getHeaderList, request_json_body, ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
 			
-			AllureUtils.logStep("Step 2: Verifying the Response of API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
-			AllureUtils.attachData("Response Body", response_create_Account.asPrettyString());
+			AllureWrapper.logStep("Step 2: Verifying the Response of API "+ApiUrls.CREATE_NEW_ACCOUNT_TYPE);
+			AllureWrapper.attachData("Response Body", response_create_Account.asPrettyString());
 			Assert.assertEquals(response_create_Account.getStatusCode(), 401);
 			Assert.assertEquals(response_create_Account.jsonPath().getString("responseCode"), "012000");
 	}
@@ -578,7 +578,7 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 	@Test(groups="Account_Type negative_accountType",description="Verify that get API should not respond when bearer token is not provided")
 	public void negative_get_all_account_types_without_barrier_token() {
 		
-		AllureUtils.logStep("Step 1: Hit Create Account Type API with empty token  "+ApiUrls.GET_ALL_ACCOUNT_TYPES);
+		AllureWrapper.logStep("Step 1: Hit Create Account Type API with empty token  "+ApiUrls.GET_ALL_ACCOUNT_TYPES);
 		Map<String, Object> getHeaderList = new HashMap<String, Object>();
 		getHeaderList.put("Authorization","");	
 		ApiModelZbox api_body_skle = new ApiModelZbox();
@@ -592,9 +592,9 @@ public class AccountTypesTestClass extends AccountTypesBaseClass {
 		String request_json_body = TestUtils.gsonString(api_body_skle);	
 		
 		Response response_get_all_accounttypes = negativePostApiResponse(getHeaderList, request_json_body, ApiUrls.GET_ALL_ACCOUNT_TYPES);
-		AllureUtils.logStep("Step 2: Verifying the Response of API"+ApiUrls.GET_ALL_ACCOUNT_TYPES);
+		AllureWrapper.logStep("Step 2: Verifying the Response of API"+ApiUrls.GET_ALL_ACCOUNT_TYPES);
 		assert response_get_all_accounttypes != null;
-		AllureUtils.attachData("Response Body", response_get_all_accounttypes.asPrettyString());
+		AllureWrapper.attachData("Response Body", response_get_all_accounttypes.asPrettyString());
 		Assert.assertEquals(response_get_all_accounttypes.getStatusCode(), 401,"The Status code should be 400");
 		Assert.assertEquals(response_get_all_accounttypes.jsonPath().getString("responseCode"), "012000");
 	}

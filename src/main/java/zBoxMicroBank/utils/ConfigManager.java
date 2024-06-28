@@ -23,7 +23,8 @@ public class ConfigManager {
 
  public static ConfigManager getConfigManagerInstance(){
      try{
-         if(configManager == null) {
+         if(configManager == null) { //grovy spock
+             // second highest salary in db
          synchronized (ConfigManager.class) {
              configManager = new ConfigManager();
          }
