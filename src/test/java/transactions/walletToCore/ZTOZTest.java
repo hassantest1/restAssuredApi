@@ -1,14 +1,21 @@
 package transactions.walletToCore;
 
-import io.restassured.response.Response;
 import org.testng.annotations.Test;
+import zBoxMicroBank.models.transactions.InquieryDto;
+import zBoxMicroBank.utils.TestUtils;
 import zBoxMicroBank.wrappers.Log4jWrapper;
 
 public class ZTOZTest extends ZTOZDataProvider {
-    @Test(dataProvider = "Step_1")
-    public void test(String JsonResponse){
+    @Test(dataProvider = "inquiryDataProvider")
+    public void testInquiry(String response){
+        System.out.println(response);
+        Log4jWrapper.info(response);
+    }
 
-        System.out.println(JsonResponse);
-        Log4jWrapper.error(JsonResponse);
+    @Test(dataProvider = "paymentDataProvider")
+    public void testPayment(String response, InquieryDto inquieryDto){
+        System.out.println("INQ=>"+inquieryDto.getData().getPayLoad().toString());
+        System.out.println(response);
+        Log4jWrapper.info(response);
     }
 }

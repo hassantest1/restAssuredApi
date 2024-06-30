@@ -7,6 +7,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
@@ -101,7 +102,7 @@ public class TestUtils {
     }
     
     public static String getDateTime(){
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         return dateFormat.format(date);
     }
@@ -113,7 +114,7 @@ public class TestUtils {
 	}
     
     public static boolean isDateFormatValid(String date) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         dateFormat.setLenient(false); // Set lenient mode to strict parsing
 
         try {
@@ -150,6 +151,25 @@ public class TestUtils {
         Random rand = new Random();
         selected = rand.nextInt(10000000);
         return selected;
+    }
+
+    public static String getRetReferenceNumber(){
+        // Get the current timestamp in milliseconds
+        long timestamp = Instant.now().toEpochMilli();
+
+        // Generate a random number between 0 and 999 (three digits)
+        Random random = new Random();
+        int randomNum = random.nextInt(1000);
+
+        // Combine timestamp and random number and convert to a string
+        String combined = String.valueOf(timestamp) + String.format("%03d", randomNum);
+
+        // Trim to ensure it's within 12 digits if needed
+        if (combined.length() > 12) {
+            combined = combined.substring(combined.length() - 12);
+        }
+
+        return combined;
     }
 
     public static String getCurrentDate(String pattern) {

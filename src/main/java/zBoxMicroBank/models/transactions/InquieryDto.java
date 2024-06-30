@@ -20,7 +20,7 @@ public class InquieryDto {
 
     public static class Data{
 
-        public Data(Security security, Account account, String channel, String terminal, String productId,boolean performCLS, String dateAndTime, String transactionCode, String reterivalReferenceNumber, PayLoad payLoad, ArrayList<AdditionalInformation> additionalInformation, String checkSum) {
+        public Data(Security security, Account account, String channel, String terminal, String productId,boolean performCLS, String dateAndTime,String stan,String transactionCode, String reterivalReferenceNumber, PayLoad payLoad, ArrayList<AdditionalInformation> additionalInformation, String checkSum) {
             this.security = security;
             this.account = account;
             this.channel = channel;
@@ -28,6 +28,7 @@ public class InquieryDto {
             this.productCode = productId;
             this.performCLS = performCLS;
             this.dateAndTime = dateAndTime;
+            this.stan=stan;
             this.transactionCode = transactionCode;
             this.reterivalReferenceNumber = reterivalReferenceNumber;
             this.payLoad = payLoad;
@@ -42,11 +43,20 @@ public class InquieryDto {
         public String productCode;
         public boolean performCLS;
         public String dateAndTime;
+        public String stan;
         public String transactionCode;
         public String reterivalReferenceNumber;
         public InquieryDto.PayLoad payLoad;
         public ArrayList<InquieryDto.AdditionalInformation> additionalInformation;
         public String checkSum;
+
+        public String getStan() {
+            return stan;
+        }
+
+        public void setStan(String stan) {
+            this.stan = stan;
+        }
 
         public boolean isPerformCLS() {
             return performCLS;
@@ -306,13 +316,35 @@ public class InquieryDto {
 
     public static class PayLoad {
 
-        public PayLoad(String transactionAmount, Account account) {
+        public PayLoad(String transactionAmount, Account account,String inquiryId,Pin pin,Otp otp) {
             this.transactionAmount = transactionAmount;
             this.account = account;
+            this.inquiryId = inquiryId;
+            this.pin=pin;
+            this.otp=otp;
         }
 
         public String transactionAmount;
+        public String inquiryId;
         public Account account;
+        public Pin pin;
+        public Otp otp;
+
+        public Pin getPin() {
+            return pin;
+        }
+
+        public void setPin(Pin pin) {
+            this.pin = pin;
+        }
+
+        public Otp getOtp() {
+            return otp;
+        }
+
+        public void setOtp(Otp otp) {
+            this.otp = otp;
+        }
 
         public Account getAccount() {
             return account;
@@ -328,6 +360,14 @@ public class InquieryDto {
 
         public void setTransactionAmount(String transactionAmount) {
             this.transactionAmount = transactionAmount;
+        }
+
+        public String getInquiryId() {
+            return inquiryId;
+        }
+
+        public void setInquiryId(String inquiryId) {
+            this.inquiryId = inquiryId;
         }
 
         public static class Account{
@@ -387,6 +427,66 @@ public class InquieryDto {
 
         }
 
+        public static class Pin{
+            public String pinType;
+            public String pin;
+
+            public Pin(String pinType, String pin) {
+                this.pinType = pinType;
+                this.pin = pin;
+            }
+
+            public String getPinType() {
+                return pinType;
+            }
+
+            public void setPinType(String pinType) {
+                this.pinType = pinType;
+            }
+
+            public String getPin() {
+                return pin;
+            }
+
+            public void setPin(String pin) {
+                this.pin = pin;
+            }
+        }
+        public static class Otp{
+            public String otpType;
+            public String otpId;
+            public String otpPin;
+
+            public Otp(String otpType, String otpId, String otpPin) {
+                this.otpType = otpType;
+                this.otpId = otpId;
+                this.otpPin = otpPin;
+            }
+
+            public String getOtpType() {
+                return otpType;
+            }
+
+            public void setOtpType(String otpType) {
+                this.otpType = otpType;
+            }
+
+            public String getOtpId() {
+                return otpId;
+            }
+
+            public void setOtpId(String otpId) {
+                this.otpId = otpId;
+            }
+
+            public String getOtpPin() {
+                return otpPin;
+            }
+
+            public void setOtpPin(String otpPin) {
+                this.otpPin = otpPin;
+            }
+        }
 
     }
 }
