@@ -106,6 +106,12 @@ public class TestUtils {
         Date date = new Date();
         return dateFormat.format(date);
     }
+
+    public static String getDateTime(String pattern){
+        DateFormat dateFormat = new SimpleDateFormat(pattern);
+        Date date = new Date();
+        return dateFormat.format(date);
+    }
     
     public static String gsonString(Object obj) {
 		Gson gson = new Gson();

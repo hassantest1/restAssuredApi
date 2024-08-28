@@ -1,6 +1,8 @@
 package zBoxMicroBank.models.transactions;
 
 
+import zBoxMicroBank.models.common.AccountDataDto;
+
 import java.util.ArrayList;
 
 public class InquieryDto {
@@ -20,13 +22,12 @@ public class InquieryDto {
 
     public static class Data{
 
-        public Data(Security security, Account account, String channel, String terminal, String productId,boolean performCLS, String dateAndTime,String stan,String transactionCode, String reterivalReferenceNumber, PayLoad payLoad, ArrayList<AdditionalInformation> additionalInformation, String checkSum) {
+        public Data(Security security, Account account, String channel, String terminal, String productId, String dateAndTime,String stan,String transactionCode, String reterivalReferenceNumber, PayLoad payLoad, ArrayList<AdditionalInformation> additionalInformation, String checkSum) {
             this.security = security;
             this.account = account;
             this.channel = channel;
             this.terminal = terminal;
             this.productCode = productId;
-            this.performCLS = performCLS;
             this.dateAndTime = dateAndTime;
             this.stan=stan;
             this.transactionCode = transactionCode;
@@ -41,12 +42,12 @@ public class InquieryDto {
         public String channel;
         public String terminal;
         public String productCode;
-        public boolean performCLS;
+
         public String dateAndTime;
         public String stan;
         public String transactionCode;
         public String reterivalReferenceNumber;
-        public InquieryDto.PayLoad payLoad;
+        public PayLoad payLoad;
         public ArrayList<InquieryDto.AdditionalInformation> additionalInformation;
         public String checkSum;
 
@@ -56,14 +57,6 @@ public class InquieryDto {
 
         public void setStan(String stan) {
             this.stan = stan;
-        }
-
-        public boolean isPerformCLS() {
-            return performCLS;
-        }
-
-        public void setPerformCLS(boolean performCLS) {
-            this.performCLS = performCLS;
         }
 
         public Security getSecurity() {
@@ -199,14 +192,14 @@ public class InquieryDto {
         public String iban;
         public String bban;
         public String pan;
-        public String currency;
 
-        public Account(String msidn, String iban,String bban, String pan, String currency){
+
+        public Account(String msidn, String iban,String bban, String pan){
             this.msidn = msidn;
             this.iban = iban;
             this.bban = bban;
             this.pan = pan;
-            this.currency = currency;
+
         }
 
         public String getMsidn() {
@@ -241,13 +234,6 @@ public class InquieryDto {
             this.pan = pan;
         }
 
-        public String getCurrency() {
-            return currency;
-        }
-
-        public void setCurrency(String currency) {
-            this.currency = currency;
-        }
     }
 
     public static class AdditionalInformation{
@@ -315,9 +301,9 @@ public class InquieryDto {
     }
 
     public static class PayLoad {
-
-        public PayLoad(String transactionAmount, Account account,String inquiryId,Pin pin,Otp otp) {
+        public PayLoad(String transactionAmount, String purposeOfPayment, Account account,String inquiryId,Pin pin,Otp otp) {
             this.transactionAmount = transactionAmount;
+            this.purposeOfPayment = purposeOfPayment;
             this.account = account;
             this.inquiryId = inquiryId;
             this.pin=pin;
@@ -325,6 +311,7 @@ public class InquieryDto {
         }
 
         public String transactionAmount;
+        public String purposeOfPayment;
         public String inquiryId;
         public Account account;
         public Pin pin;
@@ -349,40 +336,40 @@ public class InquieryDto {
         public Account getAccount() {
             return account;
         }
-
         public void setAccount(Account account) {
             this.account = account;
         }
-
         public String getTransactionAmount() {
             return transactionAmount;
         }
-
         public void setTransactionAmount(String transactionAmount) {
             this.transactionAmount = transactionAmount;
         }
-
         public String getInquiryId() {
             return inquiryId;
         }
-
         public void setInquiryId(String inquiryId) {
             this.inquiryId = inquiryId;
         }
-
+        public String getPurposeOfPayment() {
+            return purposeOfPayment;
+        }
+        public void setPurposeOfPayment(String purposeOfPayment) {
+            this.purposeOfPayment = purposeOfPayment;
+        }
         public static class Account{
             public String msidn;
             public String iban;
             public String bban;
             public String pan;
-            public String currency;
 
-            public Account(String msidn, String iban, String bban, String pan, String currency) {
+
+            public Account(String msidn, String iban, String bban, String pan) {
                 this.msidn = msidn;
                 this.iban = iban;
                 this.bban = bban;
                 this.pan = pan;
-                this.currency = currency;
+
             }
 
             public String getMsidn() {
@@ -417,16 +404,8 @@ public class InquieryDto {
                 this.pan = pan;
             }
 
-            public String getCurrency() {
-                return currency;
-            }
-
-            public void setCurrency(String currency) {
-                this.currency = currency;
-            }
 
         }
-
         public static class Pin{
             public String pinType;
             public String pin;

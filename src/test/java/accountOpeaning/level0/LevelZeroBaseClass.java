@@ -15,7 +15,6 @@ import zBoxMicroBank.models.accountOpeaningModel.AccountOpeningDto.AdditionalPar
 import zBoxMicroBank.models.accountOpeaningModel.AccountOpeningDto.OriginatorInfo;
 import zBoxMicroBank.models.accountOpeaningModel.AccountOpeningDto.AdditionalInformation;
 import zBoxMicroBank.utils.ConfigManager;
-import zBoxMicroBank.utils.RestApiRequest;
 import zBoxMicroBank.utils.TestUtils;
 
 
@@ -64,9 +63,9 @@ public class LevelZeroBaseClass {
 
         String request_json_body = TestUtils.gsonString(accountOpening);
         System.out.println("LOG===>"+request_json_body);
-        Response apiResponse = RestApiRequest.postApiResponse(getHeaderList,request_json_body,"/account/v1/customeraccounts/createaccount");
-        System.out.println("LOG===>"+apiResponse.asString());
-        return new Object[][]{{request_json_body,apiResponse}};
+        //Response apiResponse = RestApiRequest.postApiResponse(getHeaderList,request_json_body,"/account/v1/customeraccounts/createaccount");
+        //System.out.println("LOG===>"+apiResponse.asString());
+        return new Object[][]{{request_json_body}};
     }
 
     @DataProvider(name = "Step_2")

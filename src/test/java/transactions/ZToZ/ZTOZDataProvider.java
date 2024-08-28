@@ -1,8 +1,11 @@
-package transactions.walletToCore;
+package transactions.ZToZ;
 
 import io.restassured.response.Response;
+import org.junit.runner.Request;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 import zBoxMicroBank.constants.ApiUrls;
+import zBoxMicroBank.models.common.AccountDataDto;
 import zBoxMicroBank.models.transactions.InquieryDto;
 import zBoxMicroBank.models.transactions.InquieryDto.AdditionalInformation;
 import zBoxMicroBank.models.transactions.InquieryDto.Data;
@@ -15,42 +18,50 @@ import zBoxMicroBank.utils.TestUtils;
 import java.util.ArrayList;
 
 public class ZTOZDataProvider {
-    private String inquiryID;
-    InquieryDto inquieryDto;
+    private String stan;
+    private String rrn;
+    private InquieryDto inquieryDto;
     ArrayList<InquieryDto.AdditionalInformation> additionalInfo = new ArrayList<>();
-    Data data;
+    private Data data;
 
     @DataProvider(name = "inquiryDataProvider")
     public Object[][] inquiryDataProvider(){
         additionalInfo.add(new AdditionalInformation("",""));
         inquieryDto = new InquieryDto(data = new Data(new Security("ZMFS","ZMFS","ZMFS"),
-                new Account("03245062706","","","","586"),"4","1","000497",false,null,null,null,null,
-                new PayLoad("000000000100",new PayLoad.Account("03439164614","","","","586"),null,null,null),additionalInfo,""));
+                new Account("03245062706","","",""),"4","1","000497",null,null,null,null,
+                new PayLoad("000000001000","Other",new PayLoad.Account("03439164614","","",""),null,null,null),additionalInfo,""));
         String requestBody = TestUtils.gsonString(inquieryDto);
         Response hashResponse = RestAssuredUtils.postApiResponse(requestBody, ApiUrls.generateTitleFetchHash);
         data.setCheckSum(hashResponse != null ? hashResponse.getBody().asString():"");
         requestBody =TestUtils.gsonString(inquieryDto);
         Response inquiryResponse = RestAssuredUtils.postApiResponse(requestBody,ApiUrls.inquiry);
-        inquiryID = inquiryResponse!=null ? inquiryResponse.jsonPath().getString("payLoad.inquiryId"):"";
+        stan = inquiryResponse!=null ? inquiryResponse.jsonPath().getString("stan"):"";
+        rrn = inquiryResponse!=null ? inquiryResponse.jsonPath().getString("reterivalReferenceNumber"):"";
         return new Object[][]{
-                {inquiryResponse != null ? inquiryResponse.getBody().asString():""}
+                {inquiryResponse}
         };
     }
 
     @DataProvider(name = "paymentDataProvider")
     public Object[][] paymentDataProvider(){
-        additionalInfo.add(new AdditionalInformation("",""));
-        inquieryDto = new InquieryDto(data = new Data(new Security("ZMFS","ZMFS","ZMFS"),
-                null,"4","1","000497",false,TestUtils.getDateTime(),"000008",null,TestUtils.getRetReferenceNumber(),
-                new PayLoad(null,null,"",new PayLoad.Pin("",""),new PayLoad.Otp("","","")),additionalInfo,""));
-        data.getPayLoad().setInquiryId(inquiryID);
+        data.setAccount(null);
+        data.setTransactionCode(null);
+        data.getPayLoad().setAccount(null);
+        data.getPayLoad().setTransactionAmount("000000001000");
+        data.getPayLoad().setPin(new PayLoad.Pin("",""));
+        data.getPayLoad().setOtp(new PayLoad.Otp("","",""));
+        data.setStan(stan);
+        data.setReterivalReferenceNumber(rrn);
+        data.setDateAndTime(TestUtils.getDateTime());
         String requestBody = TestUtils.gsonString(inquieryDto);
         Response hashResponse = RestAssuredUtils.postApiResponse(requestBody, ApiUrls.generatePaymentHash);
         data.setCheckSum(hashResponse != null ? hashResponse.getBody().asString():"");
         requestBody =TestUtils.gsonString(inquieryDto);
+        System.out.println(requestBody);
         Response paymentResponse = RestAssuredUtils.postApiResponse(requestBody,ApiUrls.payment);
         return new Object[][]{
-                {paymentResponse!= null ? paymentResponse.getBody().asString():"",inquieryDto}
+                {paymentResponse}
         };
     }
+
 }

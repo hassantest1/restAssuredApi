@@ -1,5 +1,6 @@
 package zBoxMicroBank.utils;
 
+import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.json.simple.JSONArray;
@@ -32,7 +33,7 @@ public class RestAssuredUtils {
     public static Response postApiResponse(String Body, String url) {
         try {
             getHeaders();
-            return given().headers(getHeaderList).contentType(ContentType.JSON).body(Body)
+            return RestAssured.given().headers(getHeaderList).contentType(ContentType.JSON).body(Body)
                     .baseUri(ApiUrls.ZBOX_BASE_URL_QA).basePath(url).when().post().then().statusCode(200).assertThat()
                     .log().all().extract().response();
         } catch (Exception e) {
@@ -45,7 +46,7 @@ public class RestAssuredUtils {
     public static Response getApiResponse(Map<String, Object> getHeadersList, String url) {
 
         try {
-            return given().headers(getHeadersList).contentType(ContentType.JSON).baseUri(ApiUrls.ZBOX_BASE_URL_QA)
+            return RestAssured.given().headers(getHeadersList).contentType(ContentType.JSON).baseUri(ApiUrls.ZBOX_BASE_URL_QA)
                     .basePath(url).when().get().then().statusCode(200).assertThat().log().all().extract().response();
         } catch (Exception e) {
             // TODO: handle exception
@@ -57,7 +58,7 @@ public class RestAssuredUtils {
     public static Response negativePostApiResponse(Map<String, Object> getHeadersList, String Body, String url) {
 
         try {
-            return given().headers(getHeadersList).contentType(ContentType.JSON).body(Body)
+            return RestAssured.given().headers(getHeadersList).contentType(ContentType.JSON).body(Body)
                     .baseUri(ApiUrls.ZBOX_BASE_URL_QA).basePath(url).when().post().then().log().all().extract()
                     .response();
         } catch (Exception e) {

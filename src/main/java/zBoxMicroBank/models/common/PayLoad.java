@@ -32,6 +32,7 @@ public class PayLoad {
 	private String updatedBy;
 	private String statusId;
 	private String yearlyAmtLimitCr;
+
 	
 	public String getMaxAmtLimit() {
 		return maxAmtLimit;

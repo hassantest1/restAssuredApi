@@ -60,4 +60,5 @@ public class ApiUrls {
 	public static final String generatePaymentHash = "/transaction/v1/transaction/generateHashPayment";
 	public static final String inquiry = "/transaction/v1/transaction/inquiry";
 	public static final String payment = "/transaction/v1/transaction/payment";
+	public static final String verifyaccountdetails = "/account/v1/accounts/verifyaccountdetails";
 }
